@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import { Formik } from 'formik';
-import { Button, Input, IconButton } from '@material-tailwind/react';
+import {
+  Button,
+  Input,
+  IconButton,
+  Typography,
+} from '@material-tailwind/react';
 import { useUserLoginMutation } from './authApi';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router';
 
 export default function Login() {
   const [userLogin, { isLoading }] = useUserLoginMutation();
   const [show, setShow] = useState(false);
+  const nav = useNavigate();
   return (
-    <div className=' max-w-[400px]'>
+    <div className='max-w-[400px]'>
       <Formik
         initialValues={{ email: '', password: '' }}
         onSubmit={async (val) => {
@@ -59,6 +66,16 @@ export default function Login() {
           </form>
         )}
       </Formik>
+      <Typography color='gray' className='mt-4 text-center font-normal'>
+        Create an account?
+        <Button
+          variant='text'
+          onClick={() => nav('/sign-up')}
+          className='font-medium text-gray-900 uppercase px-2'
+        >
+          Sign Up
+        </Button>
+      </Typography>
     </div>
   );
 }

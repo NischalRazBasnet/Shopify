@@ -6,7 +6,7 @@ export default function Header() {
     <div className='px-10 py-5 flex justify-between bg-black text-white'>
       <h1>Shopify</h1>
       <nav>
-        <NavLink to={'add-todo'}>Add Todo</NavLink>
+        <NavLink to={''}></NavLink>
       </nav>
     </div>
   );
