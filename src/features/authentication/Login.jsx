@@ -9,18 +9,23 @@ import {
 import { useUserLoginMutation } from './authApi';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../user/userSlice';
 
 export default function Login() {
   const [userLogin, { isLoading }] = useUserLoginMutation();
-  const [show, setShow] = useState(false);
   const nav = useNavigate();
+  const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
+
   return (
     <div className='max-w-[400px]'>
       <Formik
         initialValues={{ email: '', password: '' }}
         onSubmit={async (val) => {
           try {
-            await userLogin(val).unwrap();
+            const response = await userLogin(val).unwrap();
+            dispatch(setUser(response));
             toast.success('Login Successful');
           } catch (err) {
             toast.error(err.data?.message || err.data);
@@ -70,7 +75,7 @@ export default function Login() {
         Create an account?
         <Button
           variant='text'
-          onClick={() => nav('/sign-up')}
+          onClick={() => nav('/signup')}
           className='font-medium text-gray-900 uppercase px-2'
         >
           Sign Up

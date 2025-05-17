@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function ProductList() {
+export default function ProfileMenu() {
   return <div></div>;
 }
