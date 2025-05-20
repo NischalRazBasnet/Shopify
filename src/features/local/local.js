@@ -1,4 +1,4 @@
-export const addUserToLocal = (user) => {
+export const setUserToLocal = (user) => {
   localStorage.setItem('user', JSON.stringify(user));
 };
 export const getUserFromLocal = () => {

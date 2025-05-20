@@ -12,12 +12,12 @@ export default function App() {
       path: '/',
       element: <RootLayout />,
       children: [
-        // {
-        //   index: true,
-        //   element: <ProductList />,
-        // },
         {
           index: true,
+          element: <ProductList />,
+        },
+        {
+          path: '/login',
           element: <Login />,
         },
         {
@@ -27,5 +27,9 @@ export default function App() {
       ],
     },
   ]);
-  return <RouterProvider router={router} />;
+  return (
+    <div className='mx-auto max-w-[1700px]'>
+      <RouterProvider router={router} />;
+    </div>
+  );
 }
