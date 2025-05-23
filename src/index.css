@@ -47,8 +47,9 @@
     @apply bg-black px-5 text-white rounded-2xl py-3 ring-2 ring-purple-500;
   }
 
-  .card {
-    @apply border-2 my-2 p-5 shadow-2xl;
+  .product-card {
+    @apply rounded-3xl w-[320px] h-[350px] flex flex-col space-y-5 overflow-hidden;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 10px; /* raw CSS must be outside @apply */
   }
 }
 

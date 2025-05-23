@@ -4,7 +4,7 @@ import RootLayout from './components/RootLayout';
 import { RouterProvider } from 'react-router-dom';
 import Login from './features/authentication/login';
 import SignUp from './features/authentication/SignUp';
-import ProductList from './features/products/ProductList';
+import HomePage from './features/home/HomePage';
 
 export default function App() {
   const router = createBrowserRouter([
@@ -14,7 +14,7 @@ export default function App() {
       children: [
         {
           index: true,
-          element: <ProductList />,
+          element: <HomePage />,
         },
         {
           path: '/login',
