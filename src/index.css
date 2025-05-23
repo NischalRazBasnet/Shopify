@@ -47,6 +47,11 @@
     @apply bg-black px-5 text-white rounded-2xl py-3 ring-2 ring-purple-500;
   }
 
+  .auth-card {
+    @apply p-5 rounded-2xl max-w-[500px] mt-40 mx-auto flex flex-col space-y-5 overflow-hidden;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 10px; /* raw CSS must be outside @apply */
+  }
+
   .product-card {
     @apply rounded-3xl w-[320px] h-[350px] flex flex-col space-y-5 overflow-hidden;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 10px; /* raw CSS must be outside @apply */

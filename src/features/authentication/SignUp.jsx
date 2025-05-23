@@ -15,7 +15,7 @@ export default function SignUp() {
   const [userSignUp, { isLoading }] = useUserSignUpMutation();
   const [show, setShow] = useState(false);
   return (
-    <div className='max-w-[400px]'>
+    <div className='auth-card'>
       <Formik
         initialValues={{ username: '', email: '', password: '' }}
         onSubmit={async (val) => {
@@ -29,7 +29,7 @@ export default function SignUp() {
         }}
       >
         {({ handleSubmit, handleChange, touched, values }) => (
-          <form onSubmit={handleSubmit} className='space-y-5'>
+          <form onSubmit={handleSubmit} className='space-y-5 flex flex-col'>
             <div>
               <Input
                 onChange={handleChange}
@@ -66,13 +66,17 @@ export default function SignUp() {
                 <i className={show ? 'fas fa-eye' : 'fas fa-eye-slash'}></i>
               </IconButton>
             </div>
-            <Button loading={isLoading} type='submit'>
+            <Button
+              loading={isLoading}
+              type='submit'
+              className='w-[90%] self-center mt-2'
+            >
               Sign Up
             </Button>
           </form>
         )}
       </Formik>
-      <Typography color='gray' className='mt-4 text-center font-normal'>
+      <Typography color='gray' className='mt-1 text-center font-normal'>
         Already have an account?{' '}
         <Button
           variant='text'
