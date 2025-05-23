@@ -1,36 +1,15 @@
 import React from 'react';
 import { useGetProductsQuery } from '../products/productApi';
-import { Button, Card, Typography } from '@material-tailwind/react';
+import {
+  Avatar,
+  Button,
+  Card,
+  IconButton,
+  Typography,
+} from '@material-tailwind/react';
+import { baseUrl } from '../../app/mainApi';
 
-const TABLE_HEAD = ['Name', 'Job', 'Employed', ''];
-
-const TABLE_ROWS = [
-  {
-    name: 'John Michael',
-    job: 'Manager',
-    date: '23/04/18',
-  },
-  {
-    name: 'Alexa Liras',
-    job: 'Developer',
-    date: '23/04/18',
-  },
-  {
-    name: 'Laurent Perrier',
-    job: 'Executive',
-    date: '19/09/17',
-  },
-  {
-    name: 'Michael Levi',
-    job: 'Developer',
-    date: '24/12/08',
-  },
-  {
-    name: 'Richard Gran',
-    job: 'Manager',
-    date: '04/10/21',
-  },
-];
+const TABLE_HEAD = ['Image', 'Title', 'Id', 'Edit', 'Delete'];
 
 export default function AdminPage() {
   const { isLoading, error, data } = useGetProductsQuery();
@@ -65,55 +44,59 @@ export default function AdminPage() {
             </tr>
           </thead>
           <tbody>
-            {TABLE_ROWS.map(({ name, job, date }, index) => {
-              const isLast = index === TABLE_ROWS.length - 1;
-              const classes = isLast
-                ? 'p-4'
-                : 'p-4 border-b border-blue-gray-50';
+            {data &&
+              data.map(({ image, _id, title }, index) => {
+                const isLast = index === data.length - 1;
+                const classes = isLast
+                  ? 'p-4'
+                  : 'p-4 border-b border-blue-gray-50';
 
-              return (
-                <tr key={name}>
-                  <td className={classes}>
-                    <Typography
-                      variant='small'
-                      color='blue-gray'
-                      className='font-normal'
-                    >
-                      {name}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant='small'
-                      color='blue-gray'
-                      className='font-normal'
-                    >
-                      {job}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant='small'
-                      color='blue-gray'
-                      className='font-normal'
-                    >
-                      {date}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      as='a'
-                      href='#'
-                      variant='small'
-                      color='blue-gray'
-                      className='font-medium'
-                    >
-                      Edit
-                    </Typography>
-                  </td>
-                </tr>
-              );
-            })}
+                return (
+                  <tr key={_id}>
+                    <td className={classes}>
+                      <Typography
+                        variant='small'
+                        color='blue-gray'
+                        className='font-normal'
+                      >
+                        <Avatar
+                          size='xl'
+                          className='object-contain'
+                          src={`${baseUrl}${image}`}
+                        />
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant='small'
+                        color='blue-gray'
+                        className='font-normal'
+                      >
+                        {title}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant='small'
+                        color='blue-gray'
+                        className='font-normal'
+                      >
+                        {_id}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <IconButton size='sm' color='green'>
+                        <i className='fas fa-edit' />
+                      </IconButton>
+                    </td>
+                    <td className={classes}>
+                      <IconButton size='sm' color='pink'>
+                        <i className='fas fa-trash' />
+                      </IconButton>
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </Card>
