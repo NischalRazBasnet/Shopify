@@ -8,6 +8,7 @@ import {
 } from '@material-tailwind/react';
 import { baseUrl } from '../../app/mainApi';
 import { NavLink } from 'react-router';
+import RemoveButton from './RemoveButton';
 
 const TABLE_HEAD = ['image', 'tItle', '_id', 'edit', 'delete'];
 
@@ -89,9 +90,9 @@ export default function AdminPage() {
                     </NavLink>
                   </td>
 
-                  {/* <td className={classes}>
+                  <td className={classes}>
                     <RemoveButton id={_id} />
-                  </td> */}
+                  </td>
                 </tr>
               );
             })}
