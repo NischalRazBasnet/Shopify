@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 
-const orderSchema = new mongoose.Schema(
+const orderScnema = new mongoose.Schema(
   {
     userId: {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true,
     },
-    totalAmout: {
+    totalAmount: {
       type: Number,
       required: true,
     },
@@ -25,7 +25,7 @@ const orderSchema = new mongoose.Schema(
           type: Number,
           required: true,
         },
-        quantity: {
+        qty: {
           type: Number,
           required: true,
         },
@@ -35,5 +35,5 @@ const orderSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Order = mongoose.model('Order', orderSchema);
+const Order = mongoose.model('Order', orderScnema);
 export default Order;
