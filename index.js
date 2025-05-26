@@ -6,6 +6,7 @@ import orderRoutes from './routes/orderRoutes.js';
 import mongoose from 'mongoose';
 import fileUpload from 'express-fileupload';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
@@ -22,9 +23,15 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-
+app.use(cookieParser());
 //middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: ['http://localhost:5173', 'https://mern-magn.vercel.app'],
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'],
+    credentials: true,
+  })
+);
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(
@@ -44,4 +51,4 @@ app.get('/', (req, res) => {
 
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
-app.use('api/orders', orderRoutes);
+app.use('/api/orders', orderRoutes);

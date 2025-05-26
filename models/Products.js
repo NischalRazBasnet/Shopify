@@ -6,13 +6,13 @@ export const categories = [
   'jewelery',
   'electronics',
 ];
-export const brands = ['Apple', 'Samsung', 'Addidas', 'Google', 'Tanishq'];
+export const brands = ['Apple', 'Samsung', 'Adidas', 'Google', 'Tanishq'];
 
 const productSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      minLength: [10, 'please provide minimum 10 characters'],
+      minLength: [5, 'please provide minimum 5 characters'],
       required: true,
     },
     description: {
