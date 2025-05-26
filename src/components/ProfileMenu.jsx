@@ -95,12 +95,13 @@ export default function ProfileMenu({ user }) {
                 switch (label) {
                   case 'Sign Out':
                     dispatch(removeUser());
-
+                    break;
                   case 'Admin Dashboard':
                     nav('/admin-page');
 
-                    closeMenu();
+                    break;
                 }
+                closeMenu();
               }}
               className={`flex items-center gap-2 rounded ${
                 isLastItem

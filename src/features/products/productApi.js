@@ -8,6 +8,7 @@ export const productApi = mainApi.injectEndpoints({
         method: 'GET',
         params: query,
       }),
+      providesTags: ['Product'],
     }),
 
     getTop5Products: builder.query({
@@ -15,6 +16,7 @@ export const productApi = mainApi.injectEndpoints({
         url: '/products/top-5',
         method: 'GET',
       }),
+      providesTags: ['Product'],
     }),
 
     addProduct: builder.mutation({
@@ -26,6 +28,7 @@ export const productApi = mainApi.injectEndpoints({
           Authorization: query.token,
         },
       }),
+      invalidatesTags: ['Product'],
     }),
   }),
 });

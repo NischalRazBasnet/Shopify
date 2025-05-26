@@ -6,7 +6,8 @@ export default function ProductList() {
   const { isLoading, error, data } = useGetProductsQuery();
 
   if (isLoading) return <h1>Loading...</h1>;
-  if (error) return <h1>{error}</h1>;
+  if (error)
+    return <h1 className='mt-20 text-center text-3xl'>No Products Found</h1>;
   console.log(data);
   return (
     <div className='grid grid-cols-4 gap-5 my-5 px-5'>

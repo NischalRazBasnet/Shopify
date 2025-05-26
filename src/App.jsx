@@ -21,7 +21,7 @@ export default function App() {
         { path: '/login', element: <Login /> },
         { path: '/signup', element: <SignUp /> },
         { path: '/admin-page', element: <AdminPage /> },
-        { path: '/add-product', element: <ProductAddForm /> },
+        { path: '/add', element: <ProductAddForm /> },
       ],
     },
   ]);
