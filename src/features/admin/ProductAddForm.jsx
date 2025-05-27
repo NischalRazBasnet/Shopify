@@ -1,17 +1,16 @@
-import { Formik } from 'formik';
 import {
   Button,
   Input,
-  Select,
   Option,
+  Select,
   Textarea,
 } from '@material-tailwind/react';
+import { Formik } from 'formik';
+import { useAddProductMutation } from '../products/productApi';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
-import { brands, categories } from '../../../../backend/models/Products';
-import { useAddProductMutation } from '../products/productApi';
-import { useNavigate } from 'react-router';
 import * as Yup from 'yup';
+import { useNavigate } from 'react-router';
 
 export const productSchema = Yup.object().shape({
   title: Yup.string().required('title is required'),
@@ -31,19 +30,19 @@ export const productSchema = Yup.object().shape({
 
 export default function ProductAddForm() {
   const nav = useNavigate();
-  const [addproduct, { isLoading }] = useAddProductMutation();
+  const [addProduct, { isLoading }] = useAddProductMutation();
   const { user } = useSelector((state) => state.userSlice);
 
   return (
-    <div className='max-w-[400px] mt-10'>
+    <div className='max-w-[400px] mt-10 pb-5'>
       <Formik
         initialValues={{
           title: '',
+          description: '',
           price: '',
+          image: '',
           category: '',
           brand: '',
-          description: '',
-          image: '',
           imagePrev: '',
         }}
         onSubmit={async (val) => {
@@ -55,12 +54,14 @@ export default function ProductAddForm() {
           formData.append('category', val.category);
           formData.append('brand', val.brand);
           try {
-            await addproduct({ body: formData, token: user.token }).unwrap();
-            toast.success('Product Successfully Added');
+            await addProduct({
+              body: formData,
+              // token: user?.token
+            }).unwrap();
+            toast.success('successfully added');
             nav(-1);
           } catch (err) {
-            toast.error(err.data?.message || data.error);
-            console.log(err);
+            toast.error(err.data?.message || err.data);
           }
         }}
         validationSchema={productSchema}
@@ -73,7 +74,7 @@ export default function ProductAddForm() {
           setFieldValue,
           errors,
         }) => (
-          <form onSubmit={handleSubmit} className='space-y-5 flex flex-col'>
+          <form onSubmit={handleSubmit} className='space-y-6'>
             <div>
               <Input
                 onChange={handleChange}
@@ -96,18 +97,16 @@ export default function ProductAddForm() {
                 <p className='text-red-500'>{errors.price}</p>
               )}
             </div>
+
             <div>
               <Select
                 onChange={(e) => setFieldValue('category', e)}
                 label='Select Category'
               >
-                {categories.map((category) => {
-                  return (
-                    <Option key={category} value={category}>
-                      {category}
-                    </Option>
-                  );
-                })}
+                <Option value="men's clothing">Men's Clothing</Option>
+                <Option value="women's clothing">Women's Clothing</Option>
+                <Option value='jewelery'>Jewelery</Option>
+                <Option value='electronics'>Electronics</Option>
               </Select>
               {touched.category && errors.category && (
                 <p className='text-red-500'>{errors.category}</p>
@@ -118,18 +117,17 @@ export default function ProductAddForm() {
                 onChange={(e) => setFieldValue('brand', e)}
                 label='Select Brand'
               >
-                {brands.map((brand) => {
-                  return (
-                    <Option key={brand} value={brand}>
-                      {brand}
-                    </Option>
-                  );
-                })}
+                <Option value='Apple'>Apple</Option>
+                <Option value='Samsung'>Samsung</Option>
+                <Option value='Addidas'> Addidas</Option>
+                <Option value='Google'>Google</Option>
+                <Option value='Tanishq'>Tanishq</Option>
               </Select>
               {touched.brand && errors.brand && (
                 <p className='text-red-500'>{errors.brand}</p>
               )}
             </div>
+
             <Textarea
               onChange={handleChange}
               value={values.description}
@@ -139,16 +137,17 @@ export default function ProductAddForm() {
             {touched.description && errors.description && (
               <p className='text-red-500'>{errors.description}</p>
             )}
+
             <div>
               <Input
                 label='Image'
-                type='file'
                 onChange={(e) => {
                   const file = e.target.files[0];
                   setFieldValue('imagePrev', URL.createObjectURL(file));
                   setFieldValue('image', file);
                 }}
                 name='image'
+                type='file'
               />
               {touched.image && errors.image && (
                 <p className='text-red-500'>{errors.image}</p>
@@ -157,18 +156,15 @@ export default function ProductAddForm() {
             <div>
               {!errors.image && values.imagePrev && (
                 <img
-                  className='mt-2 w-[200px] h-[200px] object-cover'
+                  className='w-[200px] h-[200px] object-cover'
                   src={values.imagePrev}
+                  alt=''
                 />
               )}
             </div>
 
-            <Button
-              loading={isLoading}
-              type='submit'
-              className='w-[50%] self-center mt-2'
-            >
-              Add Product
+            <Button loading={isLoading} type='submit'>
+              Submit
             </Button>
           </form>
         )}
