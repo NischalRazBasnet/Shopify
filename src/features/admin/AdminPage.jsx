@@ -83,7 +83,7 @@ export default function AdminPage() {
                     </Typography>
                   </td>
                   <td className={classes}>
-                    <NavLink to={`/admin/products/edit/${_id}`}>
+                    <NavLink to={`/edit-product/${_id}`}>
                       <IconButton size='sm' color='green'>
                         <i className='fas fa-edit' />
                       </IconButton>

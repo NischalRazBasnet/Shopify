@@ -2,6 +2,7 @@ import { mainApi } from '../../app/mainApi';
 
 export const productApi = mainApi.injectEndpoints({
   endpoints: (builder) => ({
+    //get products
     getProducts: builder.query({
       query: (query) => ({
         url: '/products',
@@ -11,14 +12,16 @@ export const productApi = mainApi.injectEndpoints({
       providesTags: ['Product'],
     }),
 
+    //get product
     getProduct: builder.query({
       query: (id) => ({
         url: `/products/${id}`,
         method: 'GET',
       }),
-      providesTags: ['Product'],
+      invalidatesTags: ['Products'],
     }),
 
+    //get Top 5 Products
     getTop5Products: builder.query({
       query: (query) => ({
         url: '/products/top-5',
@@ -27,6 +30,7 @@ export const productApi = mainApi.injectEndpoints({
       providesTags: ['Product'],
     }),
 
+    //add Product
     addProduct: builder.mutation({
       query: (query) => ({
         url: '/products',
@@ -39,18 +43,20 @@ export const productApi = mainApi.injectEndpoints({
       invalidatesTags: ['Product'],
     }),
 
+    //Update Product
     updateProduct: builder.mutation({
       query: (q) => ({
         url: `/products/${q.id}`,
         method: 'PATCH',
         body: q.body,
-        // headers: {
-        //   Authorization: q.token
-        // }
+        headers: {
+          Authorization: q.token,
+        },
       }),
-      invalidatesTags: ['Product'],
+      invalidatesTags: ['Products'],
     }),
 
+    //delete Product
     removeProduct: builder.mutation({
       query: (q) => ({
         url: `/products/${q.id}`,
@@ -77,10 +83,10 @@ export const productApi = mainApi.injectEndpoints({
 
 export const {
   useGetProductsQuery,
+  useGetProductQuery,
   useGetTop5ProductsQuery,
   useAddProductMutation,
-  useRemoveProductMutation,
-  useGetProductQuery,
   useUpdateProductMutation,
+  useRemoveProductMutation,
   useAddReviewMutation,
 } = productApi;
