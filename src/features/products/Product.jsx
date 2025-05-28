@@ -21,7 +21,7 @@ export default function Product() {
   return (
     <div className='grid grid-cols-3 mt-10 px-12'>
       <div>
-        <img src={`${baseUrl}${data.image}`} alt='' />
+        <img className='w-[250px]' src={`${baseUrl}${data.image}`} alt='' />
       </div>
       <div className='space-y-3 py-5'>
         <Typography>{data.title}</Typography>
@@ -37,15 +37,6 @@ export default function Product() {
 function ProductAddToCart() {
   const [count, setCount] = useState(0);
 
-  const handleAdd = () => {
-    const add = (prev) => prev + 1;
-    setCount(add);
-  };
-
-  const handleMinus = () => {
-    const minus = (prev) => prev - 1;
-    setCount(minus);
-  };
   const { user } = useSelector((state) => state.userSlice);
   return (
     <div>
@@ -53,18 +44,20 @@ function ProductAddToCart() {
         <h1>Product Quantity</h1>
         <div className='flex gap-3 items-center'>
           <IconButton
-            onClick={() => handleMinus()}
+            onClick={() => setCount(count - 1)}
             disabled={count === 0}
             size='sm'
           >
             <i className='fas fa-minus' />
           </IconButton>
           <h1>{count}</h1>
-          <IconButton onClick={() => handleAdd()} size='sm'>
+          <IconButton onClick={() => setCount(count + 1)} size='sm'>
             <i className='fas fa-add' />
           </IconButton>
         </div>
-        <Button size='sm'>Add To Cart</Button>
+        <Button disabled={!user || user.role === 'Admin'} size='sm'>
+          Add To Cart
+        </Button>
       </Card>
     </div>
   );
