@@ -1,4 +1,4 @@
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useGetProductQuery } from './productApi';
 import { baseUrl } from '../../app/mainApi';
 import {
@@ -9,7 +9,8 @@ import {
   Typography,
 } from '@material-tailwind/react';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setToCart } from '../carts/cartSlice';
 
 export default function Product() {
   const { id } = useParams();
@@ -29,15 +30,31 @@ export default function Product() {
         <Typography color='pink'>{data.price}</Typography>
         <Rating>{data.rating}</Rating>
       </div>
-      <ProductAddToCart />
+      <ProductAddToCart product={data} />
     </div>
   );
 }
 
-function ProductAddToCart() {
-  const [count, setCount] = useState(0);
+function ProductAddToCart({ product }) {
+  const nav = useNavigate();
 
-  const { user } = useSelector((state) => state.userSlice);
+  const [count, setCount] = useState(product.qty);
+
+  const dispatch = useDispatch();
+
+  const handleCart = () => {
+    dispatch(
+      setToCart({
+        title: product.title,
+        image: product.image,
+        price: product.price,
+        qty: count,
+        _id: product._id,
+      })
+    );
+    nav('/carts');
+  };
+
   return (
     <div>
       <Card className='flex items-center space-y-5 py-3'>
@@ -45,7 +62,7 @@ function ProductAddToCart() {
         <div className='flex gap-3 items-center'>
           <IconButton
             onClick={() => setCount(count - 1)}
-            disabled={count === 0}
+            disabled={count === 1}
             size='sm'
           >
             <i className='fas fa-minus' />
@@ -55,7 +72,11 @@ function ProductAddToCart() {
             <i className='fas fa-add' />
           </IconButton>
         </div>
-        <Button disabled={!user || user.role === 'Admin'} size='sm'>
+        <Button
+          onClick={handleCart}
+          disabled={!user || user.role === 'Admin'}
+          size='sm'
+        >
           Add To Cart
         </Button>
       </Card>

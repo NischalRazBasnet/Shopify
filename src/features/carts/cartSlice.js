@@ -4,16 +4,20 @@ import { getCartsFromLocal, setCartsToLocal } from '../local/local';
 export const cartSlice = createSlice({
   name: 'cartSlice',
   initialState: {
-    cartSlice: getCartsFromLocal(),
+    carts: getCartsFromLocal(),
   },
   reducers: {
-    addToCart: (state, action) => {
-      state.cartSlice.push(action.payload);
-      setCartsToLocal(state.carts);
-    },
-
-    updateCart: (state, action) => {
-      state.carts = state.carts.map((cart) => cart._id === action.payload._id);
+    setToCart: (state, action) => {
+      const isExist = state.carts.find(
+        (cart) => cart._id === action.payload._id
+      );
+      if (isExist) {
+        state.carts = state.carts.map((cart) =>
+          cart._id === isExist._id ? action.payload : cart
+        );
+      } else {
+        state.carts.push(action.payload);
+      }
       setCartsToLocal(state.carts);
     },
 
@@ -25,3 +29,5 @@ export const cartSlice = createSlice({
     },
   },
 });
+
+export const { setToCart, removeFromCart } = cartSlice.actions;
